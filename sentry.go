@@ -214,6 +214,7 @@ func (hook *SentryHook) Fire(entry *logrus.Entry) error {
 			exc := raven.NewException(err, currentStacktrace)
 			packet.Interfaces = append(packet.Interfaces, exc)
 			packet.Culprit = err.Error()
+			packet.Fingerprint = []string{"{{default}}", packet.Message, packet.Culprit}
 		} else {
 			packet.Interfaces = append(packet.Interfaces, currentStacktrace)
 		}
